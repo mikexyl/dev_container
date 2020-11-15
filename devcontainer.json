@@ -1,0 +1,72 @@
+// For format details, see https://aka.ms/vscode-remote/devcontainer.json or this file's README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.131.0/containers/docker-from-docker
+{
+	"name": "voxgraph",
+	"dockerFile": "Dockerfile",
+	"mounts": [ "source=/var/run/docker.sock,target=/var/run/docker-host.sock,type=bind",
+		// "source=vscode-server-insiders-extensions,target=/home/lxy/.vscode-server-insiders/extensions,type=volume",
+	],
+
+	// Use this environment variable if you need to bind mount your local source code into a new container.
+	// "remoteEnv": {
+	// 	"LOCAL_WORKSPACE_FOLDER": "${localWorkspaceFolder}"
+	// },
+
+	// Set *default* container specific settings.json values on container create.
+	"settings": { 
+		"terminal.integrated.shell.linux": "/bin/bash"
+	},
+
+	// Add the IDs of extensions you want installed when the container is created.
+	"extensions": [
+		"ms-azuretools.vscode-docker",
+		"ms-vscode.cpptools",
+		"ms-iot.vscode-ros",
+		"ms-python.python",
+		"betwo.b2-catkin-tools",
+		"austin.code-gnu-global",
+		"twxs.cmake",
+		"xaver.clang-format",
+		"wlhe.c-cpp-snippets",
+		"dotjoshjohnson.xml",
+		"redhat.vscode-yaml",
+		"esbenp.prettier-vscode",
+		"amiralizadeh9480.cpp-helper",
+		"wayou.vscode-todo-highlight",
+		"gruntfuggly.todo-tree",
+		"cschlosser.doxdocgen",
+		"eamodio.gitlens",
+	],
+	
+	// Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+	
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "/bin/bash /workspace/voxgraph_ws/entrypoint.sh",
+
+	// Uncomment when using a ptrace-based debugger like C++, Go, and Rust
+	"runArgs": [ "--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined",
+			"--gpus", "all",
+			"--name", "voxgraph_vs",
+			"-e", "DISPLAY=${env:DISPLAY}",
+			"-e", "QT_X11_NO_MITSHM=1",
+			"-e", "XAUTHORITY=/tmp/.docker.xauth",
+			"-e", "HOME=${env:HOME}",
+			"-v", "/tmp/.X11-unix:/tmp/.X11-unix:rw",
+			"-v", "/tmp/.docker.xauth:/tmp/.docker.xauth",
+			"-v", "${env:HOME}/Datasets:${env:HOME}/Datasets",
+			"-v", "${env:HOME}/Workspace/mrslam/coxslam_ws:${env:HOME}/Workspace/mrslam/coxslam_ws/",
+			"-v", "${env:HOME}/Workspace/mrslam/multi_robot_coordination_ws:${env:HOME}/Workspace/mrslam/multi_robot_coordination_ws/",
+			"-v", "${env:HOME}/Workspace/mrslam/maskgraph_ws/voxgraph_ws:${env:HOME}/Workspace/mrslam/maskgraph_ws/voxgraph_ws/",
+			"-v", "${env:HOME}/.gazebo/models:${env:HOME}/.gazebo/models",
+			"-v", "/etc/localtime:/etc/localtime",
+			"-p2222:22",
+			"--privileged",
+			"--runtime=nvidia", 
+	],
+
+	// Uncomment the next two lines to connect as a non-root user. See https://aka.ms/vscode-remote/containers/non-root.
+	"overrideCommand": false,
+	"remoteUser": "lxy"
+}
