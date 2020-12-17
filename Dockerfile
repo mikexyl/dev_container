@@ -1,6 +1,6 @@
 
 # Note: You can use any Debian/Ubuntu based image you want. 
-FROM voxgraph_dev:latest
+FROM voxgraph_dev_vim:latest
 
 RUN chsh -s /bin/bash lxy && \
   yes lxy19961002 | passwd lxy

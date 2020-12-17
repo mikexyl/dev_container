@@ -90,10 +90,6 @@ RUN apt-get update && apt-get install -y g++ build-essential cmake git libncurse
 COPY installNodejs.sh /
 RUN chmod +x /installNodejs.sh && cd / && ./installNodejs.sh && ln -s /usr/bin/nodejs /usr/bin/node
 
-RUN apt update && apt install llvm-8-tools -y && apt clean
-COPY clangd_11.0.0/bin/clangd /usr/bin
-COPY clangd_11.0.0/lib/clang /usr/lib/clang
-
 RUN chown -R lxy /home/lxy/
 USER lxy
 

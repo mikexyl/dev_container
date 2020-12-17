@@ -4,7 +4,7 @@ build_dev:
 	docker build -t voxgraph_dev ./layer_dev
 
 build_dev_vim:
-	docker build -t voxgrpah_dev_vim ./layer_vim
+	docker build -t voxgraph_dev_vim ./layer_vim
 
 build_layers:
 	make build_dev
@@ -26,6 +26,8 @@ run: build
 			-v /tmp/.docker.xauth:/tmp/.docker.xauth \
 			-v ${HOME}/Datasets:${HOME}/Datasets \
 			-v ${HOME}/Workspace/mrslam/coxslam_ws:${HOME}/Workspace/mrslam/coxslam_ws/ \
+			-v ${HOME}/Workspace/mrslam/orbslam_2_ros_ws:${HOME}/Workspace/mrslam/orbslam_2_ros_ws/ \
+			-v ${HOME}/Workspace/mrslam/sysmon_ws:${HOME}/Workspace/mrslam/sysmon_ws/ \
 			-v ${HOME}/Workspace/mrslam/maskgraph_ws/voxgraph_ws:${HOME}/Workspace/mrslam/maskgraph_ws/voxgraph_ws \
 			-v ${HOME}/Workspace/mrslam/maskgraph_ws/voxgraph_melodic_ws:/workspaces/voxgraph_melodic_ws/ \
 			-v /etc/localtime:/etc/localtime \

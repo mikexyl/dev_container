@@ -21,21 +21,20 @@
 	"extensions": [
 		"ms-azuretools.vscode-docker",
 		"ms-vscode.cpptools",
-		"ms-iot.vscode-ros",
 		"ms-python.python",
-		"betwo.b2-catkin-tools",
 		"austin.code-gnu-global",
 		"twxs.cmake",
 		"xaver.clang-format",
-		"wlhe.c-cpp-snippets",
 		"dotjoshjohnson.xml",
 		"redhat.vscode-yaml",
 		"esbenp.prettier-vscode",
-		"amiralizadeh9480.cpp-helper",
 		"wayou.vscode-todo-highlight",
 		"gruntfuggly.todo-tree",
 		"cschlosser.doxdocgen",
 		"eamodio.gitlens",
+		"llvm-vs-code-extensions.vscode-clangd",
+		"github.vscode-pull-request-github",
+		"ms-iot.vscode-ros"
 	],
 	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.
@@ -57,6 +56,7 @@
 			"-v", "/tmp/.docker.xauth:/tmp/.docker.xauth",
 			"-v", "${env:HOME}/Datasets:${env:HOME}/Datasets",
 			"-v", "${env:HOME}/Workspace/mrslam/coxslam_ws:${env:HOME}/Workspace/mrslam/coxslam_ws/",
+			"-v", "${env:HOME}/Workspace/mrslam/orbslam_2_ros_ws:${env:HOME}/Workspace/mrslam/orbslam_2_ros_ws/",
 			"-v", "${env:HOME}/Workspace/mrslam/multi_robot_coordination_ws:${env:HOME}/Workspace/mrslam/multi_robot_coordination_ws/",
 			"-v", "${env:HOME}/Workspace/mrslam/maskgraph_ws/voxgraph_ws:${env:HOME}/Workspace/mrslam/maskgraph_ws/voxgraph_ws/",
 			"-v", "${env:HOME}/.gazebo/models:${env:HOME}/.gazebo/models",

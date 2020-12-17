@@ -75,10 +75,9 @@ RUN yes password | passwd lxy
 ENV CC /usr/lib/ccache/gcc
 ENV CXX /usr/lib/ccache/g++
 
-RUN ln -s /usr/bin/clang-8 /usr/bin/clang
-RUN ln -s /usr/bin/clang++-8 /usr/bin/clang++
-
-RUN apt update && apt install doxygen -y
+RUN apt update && apt install doxygen llvm-8-tools -y && apt clean
+COPY clangd_11.0.0/bin/clangd /usr/bin
+COPY clangd_11.0.0/lib/clang /usr/lib/clang
 
 RUN apt update && apt install ccache -y 
 ENV PATH "/usr/lib/ccache:$PATH"
