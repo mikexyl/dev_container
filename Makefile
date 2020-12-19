@@ -14,7 +14,7 @@ build: build_layers
 	docker build -t voxgraph_vs .
 
 run: build
-	docker run --rm -it --name voxgraph_vs\
+	docker run --rm --name voxgraph_vs\
 		--cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
 			--gpus all \
 			--name voxgraph_vs \
