@@ -1,0 +1,15 @@
+{
+        "clangd.semanticHighlighting": true,
+        "clangd.arguments": [
+                "--header-insertion=never",
+                "--cross-file-rename"
+        ],
+        "pairs.enableCharacters": [
+                "(",
+                "[",
+                "{",
+                "'",
+                "\"",
+                "`"
+        ]
+}

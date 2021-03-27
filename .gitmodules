@@ -1,3 +1,9 @@
 [submodule "layer_vim/vim"]
 	path = layer_vim/vim
 	url = git@github.com:vim/vim.git
+[submodule "layer_vim/jedi-language-server"]
+	path = layer_vim/jedi-language-server
+	url = git@github.com:pappasam/jedi-language-server.git
+[submodule "layer_vim/ccls"]
+	path = layer_vim/ccls
+	url = https://github.com/MaskRay/ccls

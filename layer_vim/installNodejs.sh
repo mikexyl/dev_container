@@ -195,7 +195,7 @@ if [ -z "${ARCH-}" ]; then
 fi
 
 if [ -z "${BASE_URL-}" ]; then
-  BASE_URL="https://nodejs.org/dist"
+  BASE_URL="http://192.168.1.36:8000/Libraries/packages/"
 fi
 
 # parse argv variables

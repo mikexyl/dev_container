@@ -99,6 +99,9 @@ ENV PATH "/home/lxy/.local/bin:${PATH}"
 COPY installCocvim.sh .
 COPY vimrc ${HOME}/.vimrc
 COPY coc-settings.json ${HOME}/.vim/
+#COPY plug.vim ${HOME}/.vim/autoload/
+COPY .vim ${HOME}/.vim
+COPY coc ${HOME}/.config/coc
 RUN sudo chmod +x installCocvim.sh && ./installCocvim.sh
 
 USER root

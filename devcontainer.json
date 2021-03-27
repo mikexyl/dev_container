@@ -34,7 +34,9 @@
 		"eamodio.gitlens",
 		"llvm-vs-code-extensions.vscode-clangd",
 		"github.vscode-pull-request-github",
-		"ms-iot.vscode-ros"
+		"ms-iot.vscode-ros",
+		"ms-python.vscode-pylance",
+		"oderwat.indent-rainbow"
 	],
 	
 	// Use 'forwardPorts' to make a list of ports inside the container available locally.

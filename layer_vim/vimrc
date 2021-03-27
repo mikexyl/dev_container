@@ -3,53 +3,44 @@
 " - Avoid using standard Vim directory names like 'plugin'
 call plug#begin('~/.vim/plugged')
 " IDE features
-Plug 'humiaozuzu/TabBar'
-Plug 'majutsushi/tagbar'
+Plug 'preservim/nerdtree'
+Plug 'preservim/tagbar'
 Plug 'mileszs/ack.vim'
 Plug 'kien/ctrlp.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'Lokaltog/vim-powerline'
+Plug 'Xuyuanp/nerdtree-git-plugin'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'scrooloose/syntastic'
 Plug 'bronson/vim-trailing-whitespace'
-" FPs
 Plug 'kien/rainbow_parentheses.vim'
-" Plugin 'wlangstroth/vim-racket'
-" Plugin 'vim-scripts/VimClojure'
-" Plugin 'rosstimson/scala-vim-support'
-
-" Color Schemes
-Plug 'altercation/vim-colors-solarized'
-Plug 'tomasr/molokai'
-Plug 'chriskempson/vim-tomorrow-theme'
-
-" Other Utils
-" Plugin 'humiaozuzu/fcitx-status'
+Plug 'rafi/awesome-vim-colorschemes'
+Plug 'ParamagicDev/vim-medic_chalk'
 Plug 'nvie/vim-togglemouse'
-" Make sure you use single quotes
-
-" Shorthand notation; fetches https://github.com/junegunn/vim-easy-align
 Plug 'junegunn/vim-easy-align'
-
-" Any valid git URL is allowed
 Plug 'https://github.com/junegunn/vim-github-dashboard.git'
-
-" Multiple Plug commands can be written in a single line using | separators
-Plug 'SirVer/ultisnips' 
-
-" On-demand loading
-Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
 Plug 'tpope/vim-fireplace', { 'for': 'clojure' }
-
-" Plugin options
-Plug 'nsf/gocode', { 'tag': 'v.20150303', 'rtp': 'vim' }
-
-" Plugin outside ~/.vim/plugged with post-update hook
 Plug 'junegunn/fzf', { 'dir': '~/.ff', 'do': './install --all' }
-
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'kevinoid/vim-jsonc'
 Plug 'jackguo380/vim-lsp-cxx-highlight'
-Plug 'preservim/nerdtree'
+Plug 'luochen1990/rainbow'
+Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
+Plug 'scrooloose/nerdtree-project-plugin'
+Plug 'PhilRunninger/nerdtree-visual-selection'
+Plug 'tibabit/vim-todo'
+Plug 'scrooloose/nerdcommenter'
+Plug 'morhetz/gruvbox'
+Plug 'airblade/vim-gitgutter'
+if has('nvim')
+  Plug 'Shougo/denite.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/denite.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'neoclide/coc-denite'
+
 
 " Initialize plugin system
 call plug#end()
@@ -130,15 +121,15 @@ function! s:show_documentation()
   endif
 endfunction
 
-" Highlight the symbol and its references when holding the cursor.
-"autocmd CursorHold * silent call CocActionAsync('highlight')
 
 " Symbol renaming.
 nmap <leader>rn <Plug>(coc-rename)
 
 " Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+xmap <leader>F  <Plug>(coc-format-selected)
+nmap <leader>F  <Plug>(coc-format-selected)
+xmap <leader>f  <Plug>(coc-format)
+nmap <leader>f  <Plug>(coc-format)
 
 augroup mygroup
   autocmd!
@@ -213,20 +204,8 @@ nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 
-" nerd tree
-autocmd vimenter * NERDTree
-autocmd StdinReadPre * let s:std_in=1
-autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | exe 'cd '.argv()[0] | endif
-let g:NERDTreeDirArrowExpandable = '|'
-let g:NERDTreeDirArrowCollapsible = '-'
-map <C-n> :NERDTreeToggle<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-let g:NERDTreeWinPos = "right"
-"set mouse=a
-"let g:NERDTreeMouseMode=3
-
 " coc-highlighting
-"autocmd CursorHold * silent call CocActionAsync('highlight')
+autocmd CursorHold * silent call CocActionAsync('highlight')
 
 :set backspace=indent,eol,start
 
@@ -245,7 +224,7 @@ syntax on
 "--------
 " color scheme
 set background=dark
-colorscheme molokai
+colorscheme onedark
 
 " highlight current line
 au WinLeave * set nocursorline nocursorcolumn
@@ -254,14 +233,13 @@ set cursorline cursorcolumn
 
 " search
 set incsearch
-"set highlight 	                                                  " conflict with highlight current line
 set ignorecase
 set smartcase
 
 " editor settings
 set history=1000
 set nocompatible
-set nofoldenable                                                  " disable folding"
+"set nofoldenable                                                  " disable folding"
 set confirm                                                       " prompt when existing from an unsaved file
 set backspace=indent,eol,start                                    " More powerful backspacing
 set t_Co=256                                                      " Explicitly tell vim that the terminal has 256 colors "
@@ -295,36 +273,6 @@ autocmd FileType python setlocal tabstop=4 shiftwidth=4 softtabstop=4 textwidth=
 "-----------------
 " Plugin settings
 "-----------------
-" Rainbow parentheses for Lisp and variants
-let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
-let g:rbpt_max = 16
-autocmd Syntax lisp,scheme,clojure,racket RainbowParenthesesToggle
-
-" tabbar
-let g:Tb_MaxSize = 2
-let g:Tb_TabWrap = 1
-
-hi Tb_Normal guifg=white ctermfg=white
-hi Tb_Changed guifg=green ctermfg=green
-hi Tb_VisibleNormal ctermbg=252 ctermfg=235
-hi Tb_VisibleChanged guifg=green ctermbg=252 ctermfg=white
 
 " easy-motion
 let g:EasyMotion_leader_key = '<Leader>'
@@ -344,20 +292,6 @@ let g:tagbar_type_markdown = {
 		\ 'k:Heading_L3'
 	\ ]
 \ }
-
-" Nerd Tree
-let NERDChristmasTree=0
-let NERDTreeWinSize=30
-let NERDTreeChDirMode=2
-let NERDTreeIgnore=['\~$', '\.pyc$', '\.swp$']
-" let NERDTreeSortOrder=['^__\.py$', '\/$', '*', '\.swp$',  '\~$']
-let NERDTreeShowBookmarks=1
-let NERDTreeWinPos = "right"
-
-" nerdcommenter
-let NERDSpaceDelims=1
-" nmap <D-/> :NERDComToggleComment<cr>
-let NERDCompactSexyComs=1
 
 " powerline
 "let g:Powerline_symbols = 'fancy'
@@ -429,12 +363,6 @@ cmap w!! %!sudo tee >/dev/null %
 nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
-" sublime key bindings
-nmap <D-]> >>
-nmap <D-[> <<
-vmap <D-[> <gv
-vmap <D-]> >gv
-
 " eggcache vim
 nnoremap ; :
 :command W w
@@ -459,7 +387,7 @@ if has("gui_running")
     set guioptions+=m       " 隐藏菜单栏
     set guioptions-=T       " 隐藏工具栏
     set guioptions-=L       " 隐藏左侧滚动条
-    "set guioptions+=r      " 隐藏右侧滚动条
+    set guioptions+=r      " 隐藏右侧滚动条
     "set guioptions-=b      " 隐藏底部滚动条
     "set showtabline-=0     " 隐藏Tab栏
     noremap <D-M-Left> :tabprevious<cr>
@@ -475,3 +403,54 @@ if has("gui_running")
     map <D-9> 9gt
     map <D-0> :tablast<CR>
 endif
+let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
+
+" cpp-highlight
+let g:cpp_class_scope_highlight = 1
+let g:cpp_member_variable_highlight = 1
+let g:cpp_class_decl_highlight = 1
+let g:cpp_posix_standard = 1
+let g:cpp_experimental_template_highlight = 1
+let g:cpp_concepts_highlight = 1
+
+let g:tagbar_right = 1
+"let g:tagbar_vertical=25
+let NERDTreeWinPos = 'left'
+
+nnoremap <leader>n :NERDTreeFocus<CR>
+nnoremap <C-n> :NERDTree<CR>
+nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <C-f> :NERDTreeFind<CR>
+
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
+    \ execute 'NERDTree' argv()[0] | wincmd p | enew | execute 'cd '.argv()[0] | endif
+
+" Exit Vim if NERDTree is the only window left.
+autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() |
+    \ quit | endif
+
+" Open the existing NERDTree on each new tab.
+autocmd BufWinEnter * silent NERDTreeMirror
+
+set encoding=UTF-8
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+
+set signcolumn=yes
+
+let g:webdevicons_enable_airline_statusline = 0
+let g:webdevicons_enable_airline_tabline = 0
+
+let g:WebDevIconsUnicodeDecorateFileNodesDefaultSymbol = '?'
+let g:WebDevIconsUnicodeDecorateFolderNodes = 1
+let g:DevIconsEnableFoldersOpenClose = 0
+let g:DevIconsEnableFolderExtensionPatternMatching = 0
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction

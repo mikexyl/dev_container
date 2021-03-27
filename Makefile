@@ -13,12 +13,12 @@ build_layers:
 build: build_layers
 	docker build -t voxgraph_vs .
 
-run: build
-	docker run --rm --name voxgraph_vs\
+run:
+	docker run --name voxgraph_vs\
 		--cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
 			--gpus all \
 			--name voxgraph_vs \
-			-e DISPLAY=${DISPLAY} \
+			-e DISPLAY=:0 \
 			-e QT_X11_NO_MITSHM=1 \
 			-e XAUTHORITY=/tmp/.docker.xauth \
 			-e HOME=${HOME} \
@@ -30,8 +30,12 @@ run: build
 			-v ${HOME}/Workspace/mrslam/sysmon_ws:${HOME}/Workspace/mrslam/sysmon_ws/ \
 			-v ${HOME}/Workspace/mrslam/maskgraph_ws/voxgraph_ws:${HOME}/Workspace/mrslam/maskgraph_ws/voxgraph_ws \
 			-v ${HOME}/Workspace/mrslam/maskgraph_ws/voxgraph_melodic_ws:/workspaces/voxgraph_melodic_ws/ \
+			-v ${HOME}/Datasets_ssd:${HOME}/Datasets_ssd \
 			-v /etc/localtime:/etc/localtime \
 			-p2222:22 \
 			--runtime=nvidia \
 			--privileged \
 			voxgraph_vs
+
+start:
+	docker start voxgraph_vs
