@@ -1,2 +1,5 @@
 nohup.out
 .vim
+*.tar
+*.tar.*
+*.zip

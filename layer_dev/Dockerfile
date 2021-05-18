@@ -1,6 +1,6 @@
 
 # Note: You can use any Debian/Ubuntu based image you want. 
-FROM voxgraph:melodic-tf1.14.0-perception
+FROM maplab
 
 # Options
 ARG INSTALL_ZSH="false"
@@ -43,7 +43,7 @@ ARG USER_GID=$USER_UID
 RUN apt update && apt install python-pip -y
 RUN pip install -U pylint
 RUN apt update && apt install clang-format-8 -y
-RUN ln -s /usr/bin/clang-format-8 /usr/bin/clang-format
+#RUN ln -s /usr/bin/clang-format-8 /usr/bin/clang-format
 
 RUN apt install libprotobuf-dev protobuf-compiler -y
 
@@ -67,8 +67,7 @@ RUN ( \
     echo 'PermitRootLogin yes'; \
     echo 'PasswordAuthentication yes'; \
     echo 'Subsystem sftp /usr/lib/openssh/sftp-server'; \
-  ) > /etc/ssh/sshd_config_test_clion \
-  && mkdir /run/sshd
+  ) > /etc/ssh/sshd_config_test_clion 
 
 RUN yes password | passwd lxy
 

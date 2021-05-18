@@ -1,6 +1,6 @@
-FROM voxgraph_dev
+FROM maplab_dev
 
-RUN apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-gui-common
+RUN apt-get remove --purge vim vim-runtime vim-gnome vim-tiny vim-gui-common -y
 
 RUN apt-get update                                             \
   && apt-get install -y                                         \
@@ -40,7 +40,7 @@ RUN cd ${HOME}/vim && ./configure \
   # --enable-pythoninterp=dynamic \
   # --with-python-config-dir=/usr/lib/python2.7/config-x86_64-linux-gnu \
   --enable-python3interp=yes \
-  --with-python3-config-dir=/usr/lib/python3.5/config-3.5m-x86_64-linux-gnu \
+  --with-python3-config-dir=/usr/lib/python3.7/config-3.7m-x86_64-linux-gnu \
   --enable-cscope \
   --enable-gui=auto \
   #--enable-luainterp \
@@ -52,7 +52,7 @@ RUN cd ${HOME}/vim && ./configure \
   --disable-netbeans \
   --with-compiledby=sh1r0 \
   --enable-fail-if-missing && \
-  make && make install
+  make -j && make install
 
 # RUN cd /usr/src                                                 \
 #   && git clone https://gitee.com/mirrors/neovim.git            \
@@ -86,7 +86,6 @@ RUN apt-get update && apt-get install -y g++ build-essential cmake git libncurse
       libcrypto++-dev libmsgpack-dev libjsoncpp-dev \
       libmysqlcppconn-dev libgtest-dev cmake libgoogle-perftools-dev \
       libssl-dev libmysqlclient-dev libcrypto++-dev libc6-dev libc6-dev-i386
-
 COPY installNodejs.sh /
 RUN chmod +x /installNodejs.sh && cd / && ./installNodejs.sh && ln -s /usr/bin/nodejs /usr/bin/node
 
@@ -99,15 +98,15 @@ ENV PATH "/home/lxy/.local/bin:${PATH}"
 COPY installCocvim.sh .
 COPY vimrc ${HOME}/.vimrc
 COPY coc-settings.json ${HOME}/.vim/
-#COPY plug.vim ${HOME}/.vim/autoload/
-COPY .vim ${HOME}/.vim
 COPY coc ${HOME}/.config/coc
 RUN sudo chmod +x installCocvim.sh && ./installCocvim.sh
 
 USER root
-#COPY installCcls.sh /
+# install ccls
+COPY ccls /ccls
+COPY installCcls.sh /
+COPY clang+llvm-11.0.1-x86_64-linux-gnu-ubuntu-16.04 /clang+llvm-11.0.1-x86_64-linux-gnu-ubuntu-16.04
 #COPY CMake /CMake
-#COPY ccls /ccls
-#RUN cd / && chmod +x installCcls.sh && ./installCcls.sh
+RUN cd / && chmod +x installCcls.sh && ./installCcls.sh
 
 RUN update-alternatives --set python /usr/bin/python2

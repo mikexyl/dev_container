@@ -1,8 +1,0 @@
-extensions.forceUpdateAll
-extensions.toggleAutoUpdate
-snippets.editSnippets
-python.updateSparkLibrary
-python.setLinter
-python.runLinting
-python.setInterpreter
-explorer

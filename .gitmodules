@@ -6,4 +6,7 @@
 	url = git@github.com:pappasam/jedi-language-server.git
 [submodule "layer_vim/ccls"]
 	path = layer_vim/ccls
-	url = https://github.com/MaskRay/ccls
+	url = git@github.com:MaskRay/ccls.git
+[submodule "layer_vim/neovim"]
+	path = layer_vim/neovim
+	url = https://github.com/neovim/neovim.git
